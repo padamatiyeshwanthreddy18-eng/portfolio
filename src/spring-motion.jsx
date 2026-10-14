@@ -35,9 +35,18 @@ export function installSpringMotion() {
     listen(surface,'pointerleave',()=>s.start({x:0,y:0,lift:0}));
     listen(surface,'blur',()=>s.start({x:0,y:0,lift:0}),true);
   }
-  tilt(document.querySelector('.hero-stage'),document.getElementById('portrait'),'translateX(-50%)',7);
-  document.querySelectorAll('.cert-card,.identity-tile').forEach(el=>tilt(el,el,'perspective(1000px)',4));
-  const recognition=document.querySelector('.recognition-frame');tilt(recognition,recognition,'perspective(1200px) rotate(-1deg)',5);
+  const stage=document.querySelector('.hero-stage');
+  tilt(stage,document.getElementById('portrait'),'translateX(-50%)',10);
+  const title=stage.querySelector('h1');const plane=stage.querySelector('.depth-orbit');
+  const depth=spring({x:0,y:0},v=>{
+    title.style.transform=`translate(${v.x*-.45}px,${v.y*-.3}px) rotateY(${v.x*.08}deg)`;
+    if(plane)plane.style.transform=`translate(-50%,-50%) translate(${v.x}px,${v.y}px) rotateX(64deg) rotateZ(-18deg)`;
+  },{tension:150,friction:26});
+  listen(stage,'pointermove',e=>{if(motion.matches||!fine.matches||e.pointerType==='touch')return;const r=stage.getBoundingClientRect();depth.start({x:((e.clientX-r.left)/r.width-.5)*28,y:((e.clientY-r.top)/r.height-.5)*20});},{passive:true});
+  listen(stage,'pointerleave',()=>depth.start({x:0,y:0}));
+  listen(motion,'change',()=>{if(motion.matches)depth.set({x:0,y:0});});
+  document.querySelectorAll('.cert-card').forEach(el=>tilt(el,el,'perspective(1000px)',7));
+  const recognition=document.querySelector('.recognition-frame');tilt(recognition,recognition,'perspective(1200px) rotate(-1deg)',8);
   document.querySelectorAll('.project').forEach(row=>{
     const preview=row.querySelector('.project-visual');
     const s=spring({opacity:0,y:14,rotation:-6},v=>{preview.style.opacity=v.opacity;preview.style.transform=`translateY(${v.y}px) rotate(${v.rotation}deg)`;});

@@ -1,3 +1,4 @@
+import TiltedCard from './components/TiltedCard';
 import {mountSpringMotion} from './spring-motion';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
@@ -9,4 +10,9 @@ if(!reduced){
 }
 
 
+document.querySelectorAll('.identity-tile.portrait-tile').forEach(tile=>{
+ const image=tile.querySelector('img');const caption=tile.querySelector('span').textContent;
+ const fallback=<img src={image.src} alt={image.alt} width={1254} height={1254}/>;
+ createRoot(tile).render(<SafeEffect fallback={fallback}><TiltedCard imageSrc={image.getAttribute('src')} altText={image.alt} captionText={caption}/></SafeEffect>);
+});
 mountSpringMotion();

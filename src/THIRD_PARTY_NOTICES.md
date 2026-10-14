@@ -6,3 +6,7 @@ MotionFlow 1.0.0: https://github.com/slicemypage/motionflow (MIT).
 React and ReactDOM: Meta Platforms, Inc. and affiliates (MIT).
 
 React Bits SpotlightCard sourced from the official reactbits.dev registry on 2026-10-14. Upstream license terms apply.
+
+## React Bits TiltedCard
+Source: https://reactbits.dev/r/TiltedCard-JS-CSS.json
+MIT license (see components/REACT_BITS_LICENSE.md). Adapted to React Spring with a responsive portrait slot, depth layers, no mobile warning or tooltip, and reduced-motion support.
