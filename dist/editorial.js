@@ -24,9 +24,9 @@
   function update() {
     scheduled = false;
     if (reduce) return;
-    const y = Math.min(scrollY, innerHeight);
-    title.style.transform = `translateY(${y * .12}px) scale(${1 - y / innerHeight * .06})`;
-    sculpture.style.translate = `0 ${-y * .07}px`;
+    const y = Math.min(scrollY, Math.max(0, stage.offsetHeight));
+    title.style.transform = `translateY(${y * .035}px) scale(${1 - y / innerHeight * .025})`;
+    sculpture.style.translate = `0 ${-y * .025}px`;
     const r = statement.getBoundingClientRect();
     const center = r.top + r.height / 2;
     const scatter = Math.max(0, Math.min(1, Math.abs(center - innerHeight * .5) / (innerHeight * .5) - .2));
