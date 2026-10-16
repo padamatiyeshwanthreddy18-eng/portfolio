@@ -49,12 +49,14 @@ export function installSpringMotion() {
   const recognition=document.querySelector('.recognition-frame');tilt(recognition,recognition,'perspective(1200px) rotate(-1deg)',8);
   document.querySelectorAll('.project').forEach(row=>{
     const preview=row.querySelector('.project-visual');
+    if(preview.classList.contains('project-showcase')){tilt(row,preview,'perspective(1400px)',5);}else{
     const s=spring({opacity:0,y:14,rotation:-6},v=>{preview.style.opacity=v.opacity;preview.style.transform=`translateY(${v.y}px) rotate(${v.rotation}deg)`;});
     const bars=[...row.querySelectorAll('.wave i')];
     const wave=bars.length?spring({phase:0},v=>bars.forEach((bar,i)=>bar.style.transform=`scaleY(${.62+Math.sin(v.phase+i*.7)*.3})`)):null;
     const show=()=>{s.start({opacity:1,y:0,rotation:-3});if(wave&&!motion.matches)wave.controller.start({from:{phase:0},to:{phase:Math.PI*2},loop:true,config:{duration:1700}});};
     const hide=()=>{s.start({opacity:0,y:14,rotation:-6});wave?.controller.stop(true);};
     listen(row,'pointerenter',show);listen(row,'pointerleave',()=>{if(!row.contains(document.activeElement))hide();});listen(row,'focusin',show);listen(row,'focusout',e=>{if(!row.contains(e.relatedTarget))hide();});
+    }
     const arrow=row.querySelector('.project-open');const a=spring({x:0,y:0},v=>arrow.style.transform=`translate(${v.x}px,${v.y}px)`);
     listen(row,'pointerenter',()=>a.start({x:3,y:-3}));listen(row,'pointerleave',()=>a.start({x:0,y:0}));
   });
